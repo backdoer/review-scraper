@@ -6,5 +6,4 @@ gem "mechanize"
 gem "sentimental"
 
 
-
 # gem "rails"

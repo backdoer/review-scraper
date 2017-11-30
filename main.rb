@@ -11,6 +11,10 @@ reviews = scraper.parse(1, 5)
 
 reviews = reviews.select { |review| review.wouldRecommend == WOULD_RECOMMEND and review.emotion == REVIEW_EMOTION and review.sum_ind_score == SUM_IND_SCORE }
 
-reviews = reviews.sort{ |a, b|  a.polarity <=> b.polarity }
+reviews = reviews.sort{ |a, b|  a.polarity <=> b.polarity }.reverse
 
-puts reviews
+for i in 0..2 
+	puts "Review ##{i+1}"
+	puts reviews[i]
+	puts ""
+end
