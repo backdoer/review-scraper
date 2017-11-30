@@ -10,7 +10,7 @@ class Scraper
 	BASE_URL = 'https://www.dealerrater.com/dealer/'
 	RATING_KW = "rating"
 	DEFAULT_DEALER = "McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
-	
+
 	# error messages
 	IS_NUMERIC_ERROR = "The starting and ending pages must be numbers"
 	PAGES_ORDER_ERROR = "The starting page must be less than the ending page"
@@ -22,6 +22,8 @@ class Scraper
 		@url = "#{BASE_URL}/#{dealerId}/page"
 	end
 
+	# parse method to go through pages and grab reviews
+	# return array of all review objects across specified pages
 	def parse(startingPage, endingPage = nil)
 		# handle missing endingPage
 		if !endingPage
@@ -60,6 +62,8 @@ class Scraper
 	# private helper functions
 	private 
 
+	# create a review object out of an html element
+	# return review object
 	def get_review(review)
 
 		reviewObject = Review.new(
@@ -76,6 +80,8 @@ class Scraper
 
 	end
 
+	# go through all review elements and create objects
+	# return array of review objects
 	def get_reviews(doc)
 
 		reviews = []
@@ -87,6 +93,8 @@ class Scraper
 
 	end
 
+	# take a string of class values and find the one matching the pattern rating-\d\d
+	# return the value of the digits if one is found
 	def get_ranking_val(review)
 		if review.key?('class')
 			return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
@@ -95,6 +103,8 @@ class Scraper
 		return nil
 	end
 
+	# take a series of individual rating elements and pull rating for each category
+	# return hash of ratings
 	def create_rating_dict (reviews)
 		reviewDict = Hash.new
 
@@ -106,10 +116,14 @@ class Scraper
 		return reviewDict
 	end
 
+	# check whether a value is an int or is a numeric string
+	# return whether or not the number is numeric
 	def is_numeric(val)
-		return Integer(val) rescue false
+		return Integer(val).is_a? Integer rescue false
 	end
 
+	# take a starting page and ending page and do a series of validation 
+	# void 
 	def validate_pages(startingPage, endingPage)
 		# validate
 		if not is_numeric(startingPage) or not is_numeric(endingPage)

@@ -5,6 +5,7 @@ require 'sentimental'
 
 class Review 
 
+	# provide accessor rights to these attributes
 	attr_accessor :reviewContent, :overallRating, :individualRatings, 
 					:wouldRecommend, :headline, :username
 
@@ -24,11 +25,11 @@ class Review
 	IND_SCORE_MAX = 50
 	POSITIVE_SENTIMENT = :positive
 
-
+	# declare sentiment analyzer
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
 
-
+	# constructor
 	def initialize(reviewContent, overallRating, individualRatings, wouldRecommend, headline, username)
 		@reviewContent = reviewContent
 		@overallRating = overallRating
@@ -44,31 +45,39 @@ class Review
 	end
 
 	# Calculated Fields
+
+	# return average score of content and headline 
 	def averageScore
 		return (self.contentScore + self.headlineScore) / 2
 	end
 
+	# return content sentiment score
 	def contentScore
 		return @@analyzer.score(@reviewContent)
 	end
 
+	# return content sentiment score
 	def headlineScore
 		return @@analyzer.score(@headline)
 	end
 
+	# return emotion of content
 	def contentEmotion
 		return @@analyzer.sentiment(@reviewContent)
 	end
 
+	# return emotion of headline
 	def headlineEmotion
 		return @@analyzer.sentiment(@headline)
 	end
 
+	# return the sum of all the individual scores 
 	def sum_ind_score
 		return @individualRatings.values.inject(:+)
 	end
 
-	# equality comparison for testing
+	# compare review object to another review object
+	# return whether they are equal
 	def equals_review(oR)
 		return (
 			oR.reviewContent == @reviewContent\
