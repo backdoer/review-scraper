@@ -6,6 +6,7 @@ require_relative "../classes/review"
 
 class TestReview < Test::Unit::TestCase
 
+	# create a review instance to test with
 	@@review = Review.new(
 		"Test Html",
 		Review::IND_SCORE_MAX, 
@@ -21,15 +22,18 @@ class TestReview < Test::Unit::TestCase
 		"TestUsername"
 	)
 
+	# make sure the sum function for individual ratings works
 	def test_sum_indv_score
 		assert_equal(Review::SUM_IND_SCORE_MAX, @@review.sumIndScore)
 	end
 
+	# make sure the sentiment analysis library is giving back a float score for sentiment
 	def test_scores
 		assert_instance_of(Float, @@review.contentScore)
 		assert_instance_of(Float, @@review.headlineScore)
 	end
 
+	# make sure the sentiment analysis library is giving back one of the expected emotions
 	def test_emotions
 		assert(Review::POSSIBLE_SENTIMENTS.include? @@review.contentEmotion )
 		assert(Review::POSSIBLE_SENTIMENTS.include? @@review.headlineEmotion )
