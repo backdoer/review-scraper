@@ -32,7 +32,7 @@ class Review
 	# constructor
 	def initialize(reviewContent, overallRating, individualRatings, 
 		wouldRecommend, headline, username)
-	
+
 		@reviewContent = reviewContent
 		@overallRating = overallRating
 		@individualRatings = individualRatings
@@ -74,7 +74,7 @@ class Review
 	end
 
 	# return the sum of all the individual scores 
-	def sum_ind_score
+	def sumIndScore
 		return @individualRatings.values.inject(:+)
 	end
 

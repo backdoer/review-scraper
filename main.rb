@@ -8,13 +8,13 @@ require 'highline'
 # if interactive flag is specified, get user input
 if ARGV.include? '-i'
 	cli = HighLine.new
-	dealerId = cli.ask("DealerId? ") { |q| q.default = Scraper::DEFAULT_DEALER }
+	dealerId = cli.ask("Dealer Id? ") { |q| q.default = Scraper::DEFAULT_DEALER }
 
 	startPage = cli.ask("Starting Page? ", Integer) { |q| q.above = 0  }
 
 	endPage = cli.ask("Ending Page? ", Integer) { |q| q.above = startPage }
 
-	numberOfReviews = cli.ask("Number of Reviews? ", Integer) { |q| q.above = 0 }
+	numberOfReviews = cli.ask("Number of Reviews Posted? ", Integer) { |q| q.above = 0 }
 end
 
 # default values
@@ -35,7 +35,7 @@ reviews = reviews.select { |review|
 		review.wouldRecommend == Review::RECOMMEND_VALUE\
 		and review.contentEmotion == Review::POSITIVE_SENTIMENT\
 		and review.headlineEmotion == Review::POSITIVE_SENTIMENT\
-		and review.sum_ind_score == Review::SUM_IND_SCORE_MAX\
+		and review.sumIndScore == Review::SUM_IND_SCORE_MAX\
 	}
 
 # order the reviews by the highest average sentiment score
