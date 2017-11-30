@@ -1,4 +1,5 @@
 require 'mechanize'
+require './review'
 
 # Class to scrape reviews from dealerrater 
 # =====================================================
@@ -16,15 +17,12 @@ class Scraper
 
 	def get_review(review)
 
-		reviewObject = Hash.new
-
-		reviewObject[:content] = review.css('.review-content').first.content.strip
-
-		reviewObject[:rating] = get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first)
-
-		reviewObject[:individualRatings] = create_rating_dict(review.css('.review-ratings-all .tr'))
-
-		reviewObject[:wouldRecommend] = review.css('.review-ratings-all .tr').last.css('div').last.content.strip
+		reviewObject = Review.new(
+			review.css('.review-content').first.content.strip,
+			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first),
+			create_rating_dict(review.css('.review-ratings-all .tr')),
+			review.css('.review-ratings-all .tr').last.css('div').last.content.strip
+			)
 
 		return reviewObject
 
@@ -49,7 +47,7 @@ class Scraper
 		end
 
 		if startingPage < 0 or endingPage < 0
-			raise ArgumentError.new("The starting and ending pages must be greather than 0")
+			raise ArgumentError.new(s)
 		end
 	end
 
