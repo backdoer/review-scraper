@@ -25,9 +25,12 @@ GEM
       mini_portile2 (~> 2.3.0)
     ntlm-http (0.1.1)
     sentimental (1.4.1)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    unicode-display_width (1.3.0)
     webrobots (0.1.2)
 
 PLATFORMS
@@ -37,6 +40,7 @@ DEPENDENCIES
   highline
   mechanize
   sentimental
+  terminal-table
 
 BUNDLED WITH
    1.16.0

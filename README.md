@@ -42,7 +42,7 @@ If you don't have bundler, go [here](http://bundler.io/) to learn how to install
 The DealerId comes from the URL of the dealer's page on DealerRater.
 e.g. the full url of Chevrolet Buick is (with the DealerId bolded):
 
-https://www.dealerrater.com/dealer/**McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685**
+https://www.dealerrater.com/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685
 
 ### Starting Page
 This is the first page of reviews that will be scraped from the site

@@ -1,5 +1,6 @@
 require './classes/scraper'
 require 'highline'
+require 'terminal-table'
 
 # Main file to scrape web and output results
 # =====================================================
@@ -25,8 +26,14 @@ numberOfReviews ||= 3
 # create scraper class
 scraper = Scraper.new(dealerId)
 
+# start timer to track speed
+startTime = Time.now
+
 # parse the web to get the reviews
 reviews = scraper.parse(startPage, endPage)
+
+# grab the length of the reviews array to display for benchmarking
+totalReviewsParsed = reviews.length
 
 # filter the reviews by the 'overly positive' criteria
 reviews = reviews.select { |review|
@@ -39,9 +46,24 @@ reviews = reviews.select { |review|
 # order the reviews by the highest average sentiment score
 reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse
 
+line = Array.new(80){"_"}.join("")
+
 # output the top specified number of most 'overly positive' reviews
 for i in 0..numberOfReviews - 1
-	puts "Review ##{i+1}"
-	puts reviews[i]
-	puts ""
+	puts "\n*** Review ##{i+1} ***\n\n"
+	puts "#{reviews[i]}\n\n"
+	puts "#{line}\n\n"
 end
+
+# end timer
+endTime = Time.now
+
+table = Terminal::Table.new do |t|
+  t << ['Reviews Parsed', totalReviewsParsed]
+  t.add_row ['Overly Positive Reviews', reviews.length]
+  t.add_row ['Total Time Elapsed', "#{(endTime - startTime).round(3)} secs"]
+  t.add_row ['Avg. Speed', "#{(totalReviewsParsed / (endTime - startTime)).round(3)} reviews/sec"]
+end
+
+puts table
+

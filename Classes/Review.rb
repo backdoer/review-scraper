@@ -43,7 +43,11 @@ class Review
 
 	# To String
 	def to_s
-		return self.inspect
+		"By: #{@username}\n"\
+		"\"#{@headline}\"\n"\
+		"Overall Rating: #{@overallRating / 10.0}\n"\
+		"Recommend Dealer: #{@wouldRecommend}\n\n"\
+		"\"#{@reviewContent}\""
 	end
 
 	# Calculated Fields
