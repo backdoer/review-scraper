@@ -56,7 +56,6 @@ class Scraper
 		end
 
 		return reviews
-
 	end
 
 	# private helper functions
@@ -76,8 +75,6 @@ class Scraper
 		)
 
 		return reviewObject
-
-
 	end
 
 	# go through all review elements and create objects
@@ -90,7 +87,6 @@ class Scraper
 		end
 
 		return reviews
-
 	end
 
 	# take a string of class values and find the one matching the pattern rating-\d\d

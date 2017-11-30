@@ -4,7 +4,6 @@ require 'highline'
 # Main file to scrape web and output results
 # =====================================================
 
-
 # if interactive flag is specified, get user input
 if ARGV.include? '-i'
 	cli = HighLine.new
@@ -23,7 +22,6 @@ endPage ||= 5
 dealerId ||= Scraper::DEFAULT_DEALER
 numberOfReviews ||= 3
 
-
 # create scraper class
 scraper = Scraper.new(dealerId)
 
@@ -32,11 +30,11 @@ reviews = scraper.parse(startPage, endPage)
 
 # filter the reviews by the 'overly positive' criteria
 reviews = reviews.select { |review|
-		review.wouldRecommend == Review::RECOMMEND_VALUE\
-		and review.contentEmotion == Review::POSITIVE_SENTIMENT\
-		and review.headlineEmotion == Review::POSITIVE_SENTIMENT\
-		and review.sumIndScore == Review::SUM_IND_SCORE_MAX\
-	}
+	review.wouldRecommend == Review::RECOMMEND_VALUE\
+	and review.contentEmotion == Review::POSITIVE_SENTIMENT\
+	and review.headlineEmotion == Review::POSITIVE_SENTIMENT\
+	and review.sumIndScore == Review::SUM_IND_SCORE_MAX\
+}
 
 # order the reviews by the highest average sentiment score
 reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse
