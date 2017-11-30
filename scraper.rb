@@ -14,6 +14,34 @@ class Scraper
 		@url = "#{BASE_URL}/#{dealerId}/"
 	end
 
+	def get_review(review)
+
+		reviewObject = Hash.new
+
+		reviewObject[:content] = review.css('.review-content').first.content.strip
+
+		reviewObject[:rating] = get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first)
+
+		reviewObject[:individualRatings] = create_rating_dict(review.css('.review-ratings-all .tr'))
+
+		reviewObject[:wouldRecommend] = review.css('.review-ratings-all .tr').last.css('div').last.content.strip
+
+		return reviewObject
+
+
+	end
+
+	def get_reviews(doc)
+
+		reviews = []
+		doc.css('.review-entry').each do |review|
+			reviews.push(get_review(review))
+		end
+
+		return reviews
+
+	end
+
 	def parse()
 
 		# Create a mechanize agent to scrape the web pages
@@ -21,33 +49,16 @@ class Scraper
 
 		# get the html
 		doc = agent.get("#{@url}")
-
-		review = doc.css('.review-entry').first
-
-		reviewContent = review.css('.review-content').first.content
-
-		rankingVal = get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first)
-
-		individualRankings = create_rating_dict(review.css('.review-ratings-all .tr'))
-
-		wouldRecommend = review.css('.review-ratings-all .tr').last.css('div').last.content.strip
-
-		puts reviewContent
-
-		puts rankingVal
-
-		puts individualRankings
-
-		puts wouldRecommend
-
+		
+		return get_reviews(doc)
 
 	end
 
 	# private helper functions
-	private
+	private 
 		def get_ranking_val(review)
 			if review.key?('class')
-				return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last.to_i
+				return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
 			end
 
 			return nil
