@@ -2,6 +2,10 @@
 
 This is a top secret web scraping tool, written in Ruby, commissioned by the KGB to solve the mystery of the 'overly positive' reviews currently being posted about Chevrolet Buick on DealerRater.com. 
 
+Here is an example of a review:
+
+![review pic](https://github.com/backdoer/Scraper/blob/master/Assets/review.png)
+
 The reviews are then filtered on whether or not they meet the following criteria:
 
 * Reviewer says they would recommend dealer
