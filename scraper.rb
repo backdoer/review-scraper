@@ -11,7 +11,7 @@ class Scraper
 
 	# constructor
 	def initialize(dealerId)
-		@url = "#{BASE_URL}/#{dealerId}/"
+		@url = "#{BASE_URL}/#{dealerId}/page"
 	end
 
 	def get_review(review)
@@ -42,15 +42,49 @@ class Scraper
 
 	end
 
-	def parse()
+	def validate_pages(startingPage, endingPage)
+		# validate
+		if startingPage > endingPage
+			raise ArgumentError.new("The starting page must be less than the ending page")
+		end
+
+		if startingPage < 0 or endingPage < 0
+			raise ArgumentError.new("The starting and ending pages must be greather than 0")
+		end
+	end
+
+	def parse(startingPage, endingPage = nil)
+		# handle missing endingPage
+		if !endingPage
+			endingPage = startingPage
+		end
+
+		validate_pages(startingPage, endingPage)
 
 		# Create a mechanize agent to scrape the web pages
 		agent = Mechanize.new
 
 		# get the html
-		doc = agent.get("#{@url}")
-		
-		return get_reviews(doc)
+		doc = agent.get("#{@url}#{startingPage}")
+
+		reviews = []
+
+		anotherPage = true
+
+		while anotherPage
+
+			reviews += get_reviews(doc)
+
+			if startingPage < endingPage
+				startingPage += 1
+				doc = agent.get("#{@url}#{startingPage}")
+			else
+				anotherPage = false
+			end
+			
+		end
+
+		return reviews
 
 	end
 

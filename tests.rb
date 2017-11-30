@@ -49,6 +49,16 @@ class TestScraper < Test::Unit::TestCase
 
 	end
 
+	# make sure page validation works
+	def test_validate_pages
+		exception = assert_raise(ArgumentError) {Scraper.new("").validate_pages(1, 0)}
+		assert_equal("The starting page must be less than the ending page", exception.message)
+
+		exception = assert_raise(ArgumentError) {Scraper.new("").validate_pages(-3, -1)}
+		assert_equal("The starting and ending pages must be greather than 0", exception.message)
+		
+	end
+
 
 
 end
