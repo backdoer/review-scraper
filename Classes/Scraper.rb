@@ -1,5 +1,5 @@
 require 'mechanize'
-require './review'
+require_relative 'review'
 
 # Class to scrape reviews from dealerrater 
 # =====================================================

@@ -1,4 +1,4 @@
-require './scraper'
+require './Classes/scraper'
 
 # Constants of 'overly positive'
 WOULD_RECOMMEND = "Yes"

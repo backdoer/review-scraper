@@ -40,7 +40,7 @@ class TestScraper < Test::Unit::TestCase
 
 	# make sure that get_reviews is pulling 10 review from the test site
 	def test_get_reviews
-		reviews = Scraper.new("").send :get_reviews, Mechanize.new.get("#{TEST_FILE_DIR}testSite.html")
+		reviews = Scraper.new("").send :get_reviews, Mechanize.new.get("#{TEST_FILE_DIR}testSite.html"))
 		assert_equal(10, reviews.count)
 	end
 
