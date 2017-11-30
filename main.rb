@@ -13,12 +13,15 @@ if ARGV.include? '-i'
 	startPage = cli.ask("Starting Page? ", Integer) { |q| q.above = 0  }
 
 	endPage = cli.ask("Ending Page? ", Integer) { |q| q.above = startPage }
+
+	numberOfReviews = cli.ask("Number of Reviews? ", Integer) { |q| q.above = 0 }
 end
 
 # default values
 startPage ||= 1
 endPage ||= 5
 dealerId ||= Scraper::DEFAULT_DEALER
+numberOfReviews ||= 3
 
 
 # create scraper class
@@ -39,7 +42,7 @@ reviews = reviews.select { |review|
 reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse
 
 # output the top 3 most 'overly positive' reviews
-for i in 0..2 
+for i in 0..numberOfReviews - 1
 	puts "Review ##{i+1}"
 	puts reviews[i]
 	puts ""
