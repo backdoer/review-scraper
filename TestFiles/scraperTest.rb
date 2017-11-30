@@ -7,9 +7,9 @@ class TestScraper < Test::Unit::TestCase
 	TEST_FILE_DIR = "file:///Users/tdoermann/Desktop/ReviewScraper/TestFiles/"
 	TEST_WEB_URL = "https://www.dealerrater.com/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
 
-	# make sure that the review parser still works
+	# make sure that the review parser works
 	def test_get_review
-		review = Scraper.new("").get_review(Mechanize.new.get("#{TEST_FILE_DIR}testReview.html"))
+		review = Scraper.new("").send :get_review, Mechanize.new.get("#{TEST_FILE_DIR}testReview.html")
 		review2 = Review.new(
 			"Test Html",
 			50, 
@@ -31,7 +31,7 @@ class TestScraper < Test::Unit::TestCase
 
 	# make sure that the DOM of dealerrater is still in the same format
 	def test_site_dom
-		webReview = Scraper.new("").get_review(Mechanize.new.get(TEST_WEB_URL).css('.review-entry').first)
+		webReview = Scraper.new("").send :get_review, Mechanize.new.get(TEST_WEB_URL).css('.review-entry').first
 		assert_not_nil(webReview.reviewContent)
 		assert_not_nil(Fixnum)
 		assert_equal(5, webReview.individualRatings.keys.length)
@@ -40,7 +40,7 @@ class TestScraper < Test::Unit::TestCase
 
 	# make sure that get_reviews is pulling 10 review from the test site
 	def test_get_reviews
-		reviews = Scraper.new("").get_reviews(Mechanize.new.get("#{TEST_FILE_DIR}testSite.html"))
+		reviews = Scraper.new("").send :get_reviews, Mechanize.new.get("#{TEST_FILE_DIR}testSite.html")
 		assert_equal(10, reviews.count)
 	end
 

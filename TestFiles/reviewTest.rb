@@ -22,12 +22,14 @@ class TestReview < Test::Unit::TestCase
 		assert_equal(250, @@review.sum_ind_score)
 	end
 
-	def test_average_score
-		assert_instance_of(Float, @@review.averageScore)
+	def test_scores
+		assert_instance_of(Float, @@review.contentScore)
+		assert_instance_of(Float, @@review.headlineScore)
 	end
 
-	def test_emotion
+	def test_emotions
 		assert([:positive, :negative, :neutral].include? @@review.contentEmotion )
+		assert([:positive, :negative, :neutral].include? @@review.headlineEmotion )
 	end
 
 end

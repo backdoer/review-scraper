@@ -15,33 +15,6 @@ class Scraper
 		@url = "#{BASE_URL}/#{dealerId}/page"
 	end
 
-	def get_review(review)
-
-		reviewObject = Review.new(
-			review.css('.review-content').first&.content.strip,
-			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first),
-			create_rating_dict(review.css('.review-ratings-all .tr')),
-			review.css('.review-ratings-all .tr').last.css('div').last.content.strip,
-			review.css('.review-wrapper div h3').first.content.tr("\"", "").strip,
-			review.css('.review-wrapper div span').first.content.tr("-", "").strip
-		)
-
-		return reviewObject
-
-
-	end
-
-	def get_reviews(doc)
-
-		reviews = []
-		doc.css('.review-entry').each do |review|
-			reviews.push(get_review(review))
-		end
-
-		return reviews
-
-	end
-
 	def parse(startingPage, endingPage = nil)
 		# handle missing endingPage
 		if !endingPage
@@ -79,7 +52,34 @@ class Scraper
 
 	# private helper functions
 	private 
-	
+
+	def get_review(review)
+
+		reviewObject = Review.new(
+			review.css('.review-content').first&.content.strip,
+			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first),
+			create_rating_dict(review.css('.review-ratings-all .tr')),
+			review.css('.review-ratings-all .tr').last.css('div').last.content.strip,
+			review.css('.review-wrapper div h3').first.content.tr("\"", "").strip,
+			review.css('.review-wrapper div span').first.content.tr("-", "").strip
+		)
+
+		return reviewObject
+
+
+	end
+
+	def get_reviews(doc)
+
+		reviews = []
+		doc.css('.review-entry').each do |review|
+			reviews.push(get_review(review))
+		end
+
+		return reviews
+
+	end
+
 	def get_ranking_val(review)
 		if review.key?('class')
 			return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i

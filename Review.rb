@@ -1,8 +1,11 @@
 require 'sentimental'
 
+# Class to encapsulate review objects
+# =====================================================
+
 class Review 
 
-	attr_accessor :reviewContent, :overallRating, :individualRatings, :wouldRecommend
+	attr_accessor :reviewContent, :overallRating, :individualRatings, :wouldRecommend, :headline, :username
 
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
@@ -52,7 +55,9 @@ class Review
 			oR.reviewContent == @reviewContent\
 			and oR.overallRating == @overallRating\
 			and oR.individualRatings == @individualRatings\
-			and oR.wouldRecommend == @wouldRecommend
+			and oR.wouldRecommend == @wouldRecommend\
+			and oR.headline == @headline\
+			and oR.username == @username
 		)
 	end
 
