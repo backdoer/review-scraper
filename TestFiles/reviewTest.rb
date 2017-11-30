@@ -25,7 +25,7 @@ class TestReview < Test::Unit::TestCase
 	end
 
 	def test_emotion
-		assert([:positive, :negative, :neutral].include? @@review.emotion )
+		assert([:positive, :negative, :neutral].include? @@review.contentEmotion )
 	end
 
 end

@@ -23,11 +23,15 @@ class Review
 
 	# Calculated Fields
 	def polarity
-		return @@analyzer.score(@reviewContent)
+		return (@@analyzer.score(@reviewContent) + @@analyzer.score(@headline)) / 2
 	end
 
-	def emotion
+	def contentEmotion
 		return @@analyzer.sentiment(@reviewContent)
+	end
+
+	def headlineEmotion
+		return @@analyzer.sentiment(@headline)
 	end
 
 	def sum_ind_score
