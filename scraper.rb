@@ -21,8 +21,10 @@ class Scraper
 			review.css('.review-content').first&.content.strip,
 			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first),
 			create_rating_dict(review.css('.review-ratings-all .tr')),
-			review.css('.review-ratings-all .tr').last.css('div').last.content.strip
-			)
+			review.css('.review-ratings-all .tr').last.css('div').last.content.strip,
+			review.css('.review-wrapper div h3').first.content.tr("\"", "").strip,
+			review.css('.review-wrapper div span').first.content.tr("-", "").strip
+		)
 
 		return reviewObject
 

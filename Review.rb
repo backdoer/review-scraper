@@ -7,11 +7,13 @@ class Review
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
 
-	def initialize(reviewContent, overallRating, individualRatings, wouldRecommend)
+	def initialize(reviewContent, overallRating, individualRatings, wouldRecommend, headline, username)
 		@reviewContent = reviewContent
 		@overallRating = overallRating
 		@individualRatings = individualRatings
 		@wouldRecommend = wouldRecommend
+		@headline = headline
+		@username = username
 	end
 
 	# To String
