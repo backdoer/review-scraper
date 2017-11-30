@@ -20,7 +20,10 @@ class TestScraper < Test::Unit::TestCase
 				"Pricing"=>50, 
 				"Overall Experience"=>50
 			},
-			"Yes"
+			"Yes",
+			"Above and Beyond",
+			"Jrainer1010",
+
 		)
 		assert(review.equals_review(review2), "Review parser isn't working")
 

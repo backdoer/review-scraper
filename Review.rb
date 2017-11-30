@@ -22,8 +22,16 @@ class Review
 	end
 
 	# Calculated Fields
-	def polarity
-		return (@@analyzer.score(@reviewContent) + @@analyzer.score(@headline)) / 2
+	def averageScore
+		return (self.contentScore + self.headlineScore) / 2
+	end
+
+	def contentScore
+		return @@analyzer.score(@reviewContent)
+	end
+
+	def headlineScore
+		return @@analyzer.score(@headline)
 	end
 
 	def contentEmotion
@@ -40,7 +48,12 @@ class Review
 
 	# equality comparison for testing
 	def equals_review(oR)
-		oR.reviewContent == @reviewContent and oR.overallRating == @overallRating and oR.individualRatings == @individualRatings and oR.wouldRecommend == @wouldRecommend
+		return (
+			oR.reviewContent == @reviewContent\
+			and oR.overallRating == @overallRating\
+			and oR.individualRatings == @individualRatings\
+			and oR.wouldRecommend == @wouldRecommend
+		)
 	end
 
 end

@@ -9,9 +9,14 @@ scraper = Scraper.new("McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-rev
 
 reviews = scraper.parse(1, 5)
 
-reviews = reviews.select { |review| review.wouldRecommend == WOULD_RECOMMEND and review.contentEmotion == REVIEW_EMOTION and review.headlineEmotion == REVIEW_EMOTION and review.sum_ind_score == SUM_IND_SCORE }
+reviews = reviews.select { |review|
+		review.wouldRecommend == WOULD_RECOMMEND\
+		and review.contentEmotion == REVIEW_EMOTION\
+		and review.headlineEmotion == REVIEW_EMOTION\
+		and review.sum_ind_score == SUM_IND_SCORE\
+	}
 
-reviews = reviews.sort{ |a, b|  a.polarity <=> b.polarity }.reverse
+reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse
 
 for i in 0..2 
 	puts "Review ##{i+1}"

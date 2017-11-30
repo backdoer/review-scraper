@@ -13,15 +13,17 @@ class TestReview < Test::Unit::TestCase
 			"Pricing"=>50, 
 			"Overall Experience"=>50
 		},
-		"Yes"
+		"Yes",
+		"Test Headline",
+		"TestUsername"
 	)
 
 	def test_sum_indv_score
 		assert_equal(250, @@review.sum_ind_score)
 	end
 
-	def test_polarity
-		assert_instance_of(Float, @@review.polarity)
+	def test_average_score
+		assert_instance_of(Float, @@review.averageScore)
 	end
 
 	def test_emotion

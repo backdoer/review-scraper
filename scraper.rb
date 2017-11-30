@@ -79,6 +79,7 @@ class Scraper
 
 	# private helper functions
 	private 
+	
 	def get_ranking_val(review)
 		if review.key?('class')
 			return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
