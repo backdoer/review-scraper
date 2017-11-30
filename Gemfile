@@ -6,5 +6,4 @@ gem "mechanize"
 gem "sentimental"
 gem "highline"
 
-
 # gem "rails"

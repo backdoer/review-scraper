@@ -41,7 +41,7 @@ reviews = reviews.select { |review|
 # order the reviews by the highest average sentiment score
 reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse
 
-# output the top 3 most 'overly positive' reviews
+# output the top specified number of most 'overly positive' reviews
 for i in 0..numberOfReviews - 1
 	puts "Review ##{i+1}"
 	puts reviews[i]
