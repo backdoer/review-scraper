@@ -5,7 +5,8 @@ require 'sentimental'
 
 class Review 
 
-	attr_accessor :reviewContent, :overallRating, :individualRatings, :wouldRecommend, :headline, :username
+	attr_accessor :reviewContent, :overallRating, :individualRatings, 
+					:wouldRecommend, :headline, :username
 
 	# constants
 	POSSIBLE_SENTIMENTS = [:positive, :negative, :neutral]
@@ -21,7 +22,7 @@ class Review
 	RECOMMEND_VALUE = "Yes"
 	SUM_IND_SCORE_MAX = 250
 	IND_SCORE_MAX = 50
-	POSITIVE_SENTIMENT = :joy
+	POSITIVE_SENTIMENT = :positive
 
 
 	@@analyzer = Sentimental.new
