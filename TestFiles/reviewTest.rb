@@ -1,25 +1,25 @@
 require "test/unit"
-require "./review"
+require_relative "../Classes/review"
 
 class TestReview < Test::Unit::TestCase
 
 	@@review = Review.new(
 		"Test Html",
-		50, 
+		Review::IND_SCORE_MAX, 
 		{
-			"Customer Service"=>50, 
-			"Quality of Work"=>50, 
-			"Friendliness"=>50, 
-			"Pricing"=>50, 
-			"Overall Experience"=>50
+			"Customer Service"=>Review::IND_SCORE_MAX, 
+			"Quality of Work"=>Review::IND_SCORE_MAX, 
+			"Friendliness"=>Review::IND_SCORE_MAX, 
+			"Pricing"=>Review::IND_SCORE_MAX, 
+			"Overall Experience"=>Review::IND_SCORE_MAX
 		},
-		"Yes",
+		Review::RECOMMEND_VALUE,
 		"Test Headline",
 		"TestUsername"
 	)
 
 	def test_sum_indv_score
-		assert_equal(250, @@review.sum_ind_score)
+		assert_equal(Review::SUM_IND_SCORE_MAX, @@review.sum_ind_score)
 	end
 
 	def test_scores
@@ -28,8 +28,8 @@ class TestReview < Test::Unit::TestCase
 	end
 
 	def test_emotions
-		assert([:positive, :negative, :neutral].include? @@review.contentEmotion )
-		assert([:positive, :negative, :neutral].include? @@review.headlineEmotion )
+		assert(Review::POSSIBLE_SENTIMENTS.include? @@review.contentEmotion )
+		assert(Review::POSSIBLE_SENTIMENTS.include? @@review.headlineEmotion )
 	end
 
 end

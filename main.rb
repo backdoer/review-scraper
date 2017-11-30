@@ -1,19 +1,14 @@
 require './Classes/scraper'
 
-# Constants of 'overly positive'
-WOULD_RECOMMEND = "Yes"
-REVIEW_EMOTION = :positive
-SUM_IND_SCORE = 250
-
-scraper = Scraper.new("McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685")
+scraper = Scraper.new()
 
 reviews = scraper.parse(1, 5)
 
 reviews = reviews.select { |review|
-		review.wouldRecommend == WOULD_RECOMMEND\
-		and review.contentEmotion == REVIEW_EMOTION\
-		and review.headlineEmotion == REVIEW_EMOTION\
-		and review.sum_ind_score == SUM_IND_SCORE\
+		review.wouldRecommend == Review::RECOMMEND_VALUE\
+		and review.contentEmotion == :positive\
+		and review.headlineEmotion == :positive\
+		and review.sum_ind_score == Review::SUM_IND_SCORE_MAX\
 	}
 
 reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse

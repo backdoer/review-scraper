@@ -7,11 +7,18 @@ require_relative 'review'
 class Scraper
 
 	# constants
-	BASE_URL = 'https://www.dealerrater.com/dealer'
+	BASE_URL = 'https://www.dealerrater.com/dealer/'
 	RATING_KW = "rating"
+	DEFAULT_DEALER = "McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
+	
+	# error messages
+	IS_NUMERIC_ERROR = "The starting and ending pages must be numbers"
+	PAGES_ORDER_ERROR = "The starting page must be less than the ending page"
+	PAGES_GRTH_0_ERROR = "The starting and ending pages must be greather than 0"
+	
 
 	# constructor
-	def initialize(dealerId)
+	def initialize(dealerId = DEFAULT_DEALER)
 		@url = "#{BASE_URL}/#{dealerId}/page"
 	end
 
@@ -106,15 +113,15 @@ class Scraper
 	def validate_pages(startingPage, endingPage)
 		# validate
 		if not is_numeric(startingPage) or not is_numeric(endingPage)
-			raise ArgumentError.new("The starting and ending pages must be numbers")
+			raise ArgumentError.new(IS_NUMERIC_ERROR)
 		end
 
 		if startingPage > endingPage
-			raise ArgumentError.new("The starting page must be less than the ending page")
+			raise ArgumentError.new(PAGES_ORDER_ERROR)
 		end
 
 		if startingPage < 0 or endingPage < 0
-			raise ArgumentError.new("The starting and ending pages must be greather than 0")
+			raise ArgumentError.new(PAGES_GRTH_0_ERROR)
 		end
 	end
 end

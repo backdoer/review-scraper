@@ -7,8 +7,17 @@ class Review
 
 	attr_accessor :reviewContent, :overallRating, :individualRatings, :wouldRecommend, :headline, :username
 
+	# constants
+	POSSIBLE_SENTIMENTS = [:positive, :negative, :neutral]
+
+	# constants of 'overly positive' values
+	RECOMMEND_VALUE = "Yes"
+	SUM_IND_SCORE_MAX = 250
+	IND_SCORE_MAX = 50
+
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
+
 
 	def initialize(reviewContent, overallRating, individualRatings, wouldRecommend, headline, username)
 		@reviewContent = reviewContent
