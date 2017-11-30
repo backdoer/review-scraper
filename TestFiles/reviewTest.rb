@@ -22,7 +22,7 @@ class TestReview < Test::Unit::TestCase
 	)
 
 	def test_sum_indv_score
-		assert_equal(Review::SUM_IND_SCORE_MAX, @@review.sum_ind_score)
+		assert_equal(Review::SUM_IND_SCORE_MAX, @@review.sumIndScore)
 	end
 
 	def test_scores
