@@ -9,11 +9,20 @@ class Review
 
 	# constants
 	POSSIBLE_SENTIMENTS = [:positive, :negative, :neutral]
+	IND_RATING_HEADINGS = {
+		:customerService => "Customer Service",
+		:qualityOfWork => "Quality of Work",
+		:friendliness => "Friendliness",
+		:pricing => "Pricing",
+		:overallExperience => "Overall Experience"
+	}
 
-	# constants of 'overly positive' values
+	# 'overly positive' values
 	RECOMMEND_VALUE = "Yes"
 	SUM_IND_SCORE_MAX = 250
 	IND_SCORE_MAX = 50
+	POSITIVE_SENTIMENT = :joy
+
 
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults

@@ -7,11 +7,11 @@ class TestReview < Test::Unit::TestCase
 		"Test Html",
 		Review::IND_SCORE_MAX, 
 		{
-			"Customer Service"=>Review::IND_SCORE_MAX, 
-			"Quality of Work"=>Review::IND_SCORE_MAX, 
-			"Friendliness"=>Review::IND_SCORE_MAX, 
-			"Pricing"=>Review::IND_SCORE_MAX, 
-			"Overall Experience"=>Review::IND_SCORE_MAX
+			Review::IND_RATING_HEADINGS[:customerService]=>Review::IND_SCORE_MAX, 
+			Review::IND_RATING_HEADINGS[:qualityOfWork]=>Review::IND_SCORE_MAX, 
+			Review::IND_RATING_HEADINGS[:friendliness]=>Review::IND_SCORE_MAX, 
+			Review::IND_RATING_HEADINGS[:pricing]=>Review::IND_SCORE_MAX, 
+			Review::IND_RATING_HEADINGS[:overallExperience]=>Review::IND_SCORE_MAX
 		},
 		Review::RECOMMEND_VALUE,
 		"Test Headline",
