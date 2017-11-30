@@ -18,7 +18,7 @@ class Scraper
 	
 
 	# constructor
-	def initialize(dealerId)
+	def initialize(dealerId = DEFAULT_DEALER)
 		@url = "#{BASE_URL}/#{dealerId}/page"
 	end
 
