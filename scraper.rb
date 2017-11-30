@@ -40,17 +40,6 @@ class Scraper
 
 	end
 
-	def validate_pages(startingPage, endingPage)
-		# validate
-		if startingPage > endingPage
-			raise ArgumentError.new("The starting page must be less than the ending page")
-		end
-
-		if startingPage < 0 or endingPage < 0
-			raise ArgumentError.new(s)
-		end
-	end
-
 	def parse(startingPage, endingPage = nil)
 		# handle missing endingPage
 		if !endingPage
@@ -88,22 +77,41 @@ class Scraper
 
 	# private helper functions
 	private 
-		def get_ranking_val(review)
-			if review.key?('class')
-				return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
-			end
-
-			return nil
+	def get_ranking_val(review)
+		if review.key?('class')
+			return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
 		end
 
-		def create_rating_dict (reviews)
-			reviewDict = Hash.new
+		return nil
+	end
 
-			for i in 0..reviews.length - 2
-				details = reviews[i].css('div')
-				reviewDict[details.first.content] = get_ranking_val(details.last)
-			end
+	def create_rating_dict (reviews)
+		reviewDict = Hash.new
 
-			return reviewDict
+		for i in 0..reviews.length - 2
+			details = reviews[i].css('div')
+			reviewDict[details.first.content] = get_ranking_val(details.last)
 		end
+
+		return reviewDict
+	end
+
+	def is_numeric(val)
+		return Integer(val) rescue false
+	end
+
+	def validate_pages(startingPage, endingPage)
+		# validate
+		if not is_numeric(startingPage) or not is_numeric(endingPage)
+			raise ArgumentError.new("The starting and ending pages must be numbers")
+		end
+
+		if startingPage > endingPage
+			raise ArgumentError.new("The starting page must be less than the ending page")
+		end
+
+		if startingPage < 0 or endingPage < 0
+			raise ArgumentError.new("The starting and ending pages must be greather than 0")
+		end
+	end
 end

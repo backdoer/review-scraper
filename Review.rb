@@ -1,6 +1,6 @@
 require 'sentimental'
 
-class Review
+class Review 
 
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
@@ -46,6 +46,11 @@ class Review
 
 	def sumIndScore
 		return @individualRatings.values.inject(:+)
+	end
+
+	# equality comparison
+	def equalsReview(oR)
+		oR.reviewContent == @reviewContent and oR.overallRating == @overallRating and oR.individualRatings == @individualRatings and oR.wouldRecommend == @wouldRecommend
 	end
 
 end
