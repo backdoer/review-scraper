@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 gem "mechanize"
 gem "sentimental"
+gem "highline"
 
 
 # gem "rails"
