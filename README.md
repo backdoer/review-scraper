@@ -6,7 +6,7 @@ Here is an example of a review:
 
 ![review pic](https://github.com/backdoer/Scraper/blob/master/Assets/review.png)
 
-The reviews are then filtered on whether or not they meet the following criteria:
+Once the reviews are scraped, they are then filtered on whether or not they meet the following criteria:
 
 * Reviewer says they would recommend dealer
 * Every review category has 5 stars
