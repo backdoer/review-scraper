@@ -11,14 +11,14 @@ class Scraper
 	RATING_KW = "rating"
 	DEFAULT_DEALER = "McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
 
-	# error messages
+	# error messages used in validation
 	IS_NUMERIC_ERROR = "The starting and ending pages must be numbers"
 	PAGES_ORDER_ERROR = "The starting page must be less than the ending page"
 	PAGES_GRTH_0_ERROR = "The starting and ending pages must be greather than 0"
 	
 
 	# constructor
-	def initialize(dealerId = DEFAULT_DEALER)
+	def initialize(dealerId)
 		@url = "#{BASE_URL}/#{dealerId}/page"
 	end
 

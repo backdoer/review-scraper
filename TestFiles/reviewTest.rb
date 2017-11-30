@@ -1,6 +1,9 @@
 require "test/unit"
 require_relative "../Classes/review"
 
+# Test Class to test the functionality of the Review class
+# ==========================================================
+
 class TestReview < Test::Unit::TestCase
 
 	@@review = Review.new(

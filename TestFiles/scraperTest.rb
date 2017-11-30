@@ -2,6 +2,9 @@ require "test/unit"
 require_relative "../Classes/scraper"
 require "mechanize"
 
+# Test Class to test the functionality of the Scraper class
+# ==========================================================
+
 class TestScraper < Test::Unit::TestCase
 
 	TEST_FILE_DIR = "file:///Users/tdoermann/Desktop/ReviewScraper/TestFiles/"
@@ -30,7 +33,10 @@ class TestScraper < Test::Unit::TestCase
 
 	# make sure that the DOM of dealerrater is still in the same format
 	def test_site_dom
-		webReview = Scraper.new().send :get_review, Mechanize.new.get("#{Scraper::BASE_URL}#{Scraper::DEFAULT_DEALER}").css('.review-entry').first
+		webReview = Scraper.new().send :get_review, 
+		      Mechanize.new.get("#{Scraper::BASE_URL}#{Scraper::DEFAULT_DEALER}")\
+		      .css('.review-entry').first
+		      
 		assert_not_nil(webReview.reviewContent)
 		assert_not_nil(Fixnum)
 		assert_equal(5, webReview.individualRatings.keys.length)
@@ -55,7 +61,7 @@ class TestScraper < Test::Unit::TestCase
 		exception = assert_raise(ArgumentError) {Scraper.new().parse(-3, -1)}
 		assert_equal(Scraper::PAGES_GRTH_0_ERROR, exception.message)
 
-		# make sure going across multiple pages works
+		# make sure navigation across multiple pages works
 		assert_equal(20, Scraper.new().parse(1, 2).count)
 	end
 

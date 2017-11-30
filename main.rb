@@ -1,10 +1,31 @@
 require './Classes/scraper'
+require 'highline'
+
+# Main file to scrape web and output results
+# =====================================================
+
+
+# if interactive flag is specified, get user input
+if ARGV.include? '-i'
+	cli = HighLine.new
+	dealerId = cli.ask("DealerId? ") { |q| q.default = Scraper::DEFAULT_DEALER }
+
+	startPage = cli.ask("Starting Page? ", Integer) { |q| q.above = 0  }
+
+	endPage = cli.ask("Ending Page? ", Integer) { |q| q.above = startPage }
+end
+
+# default values
+startPage ||= 1
+endPage ||= 5
+dealerId ||= Scraper::DEFAULT_DEALER
+
 
 # create scraper class
-scraper = Scraper.new()
+scraper = Scraper.new(dealerId)
 
 # parse the web to get the reviews
-reviews = scraper.parse(1, 5)
+reviews = scraper.parse(startPage, endPage)
 
 # filter the reviews by the 'overly positive' criteria
 reviews = reviews.select { |review|

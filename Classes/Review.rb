@@ -30,7 +30,9 @@ class Review
 	@@analyzer.load_defaults
 
 	# constructor
-	def initialize(reviewContent, overallRating, individualRatings, wouldRecommend, headline, username)
+	def initialize(reviewContent, overallRating, individualRatings, 
+		wouldRecommend, headline, username)
+	
 		@reviewContent = reviewContent
 		@overallRating = overallRating
 		@individualRatings = individualRatings
