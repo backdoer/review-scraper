@@ -2,6 +2,8 @@ require 'sentimental'
 
 class Review 
 
+	attr_accessor :reviewContent, :overallRating, :individualRatings, :wouldRecommend
+
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
 	@@analyzer.threshold = 2
@@ -15,24 +17,7 @@ class Review
 
 	# To String
 	def to_s
-		
-	end
-
-	# Getters
-	def reviewContent
-		@reviewContent
-	end
-
-	def overallRating
-		@overallRating
-	end
-
-	def individualRatings
-		@individualRatings
-	end
-
-	def wouldRecommend
-		@wouldRecommend
+		return self.inspect
 	end
 
 	# Calculated Fields
@@ -48,7 +33,7 @@ class Review
 		return @individualRatings.values.inject(:+)
 	end
 
-	# equality comparison
+	# equality comparison for testing
 	def equalsReview(oR)
 		oR.reviewContent == @reviewContent and oR.overallRating == @overallRating and oR.individualRatings == @individualRatings and oR.wouldRecommend == @wouldRecommend
 	end

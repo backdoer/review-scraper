@@ -4,7 +4,6 @@ source "https://rubygems.org"
 
 gem "mechanize"
 gem "sentimental"
-gem "finishing_moves"
 
 
 
