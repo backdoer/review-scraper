@@ -58,7 +58,7 @@ This is the number of reviews that will be printed in the console once the web s
 ### Default Run
 In the root directory of the project, run the following command in your terminal to run the default version of the tool:
 ```
-ruby main.rb
+ruby Main.rb
 ```
 
 This will default to the following parameters for the web scrape:
@@ -76,7 +76,7 @@ This will default to the following parameters for the web scrape:
 To run the interactive version of the tool, which allows you to specify the four parameters instead of resorting to default, run the following command in the root directory of the project:
 
 ```
-ruby main.rb -i
+ruby Main.rb -i
 ```
 
 You will then be prompted for the four parameters mentioned above in order. Leaving the **Dealer Id** blank will default it to "McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685" (Chevrolet Buick).

@@ -1,4 +1,4 @@
-require './Classes/scraper'
+require './classes/scraper'
 require 'highline'
 
 # Main file to scrape web and output results

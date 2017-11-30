@@ -1,5 +1,5 @@
 require "test/unit"
-require_relative "../Classes/scraper"
+require_relative "../classes/scraper"
 require "mechanize"
 
 # Test Class to test the functionality of the Scraper class
@@ -11,7 +11,7 @@ class TestScraper < Test::Unit::TestCase
 
 	# make sure that the review parser works
 	def test_get_review
-		review = Scraper.new().send :get_review, Mechanize.new.get("#{TEST_FILE_DIR}testReview.html")
+		review = Scraper.new().send :get_review, Mechanize.new.get("#{TEST_FILE_DIR}TestReview.html")
 		review2 = Review.new(
 			"Test Html",
 			Review::IND_SCORE_MAX, 
@@ -36,7 +36,7 @@ class TestScraper < Test::Unit::TestCase
 		webReview = Scraper.new().send :get_review, 
 		      Mechanize.new.get("#{Scraper::BASE_URL}#{Scraper::DEFAULT_DEALER}")\
 		      .css('.review-entry').first
-		      
+
 		assert_not_nil(webReview.reviewContent)
 		assert_not_nil(Fixnum)
 		assert_equal(5, webReview.individualRatings.keys.length)
@@ -45,7 +45,7 @@ class TestScraper < Test::Unit::TestCase
 
 	# make sure that get_reviews is pulling 10 review from the test site
 	def test_get_reviews
-		reviews = Scraper.new().send :get_reviews, Mechanize.new.get("#{TEST_FILE_DIR}testSite.html")
+		reviews = Scraper.new().send :get_reviews, Mechanize.new.get("#{TEST_FILE_DIR}TestSite.html")
 		assert_equal(10, reviews.count)
 	end
 

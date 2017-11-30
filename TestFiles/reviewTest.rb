@@ -1,5 +1,5 @@
 require "test/unit"
-require_relative "../Classes/review"
+require_relative "../classes/review"
 
 # Test Class to test the functionality of the Review class
 # ==========================================================
