@@ -4,7 +4,8 @@ require "mechanize"
 
 class TestScraper < Test::Unit::TestCase
 
-	TEST_FILE_DIR = "file:///Users/tdoermann/Desktop/ReviewScraper/TestSites/"
+	TEST_FILE_DIR = "file:///Users/tdoermann/Desktop/ReviewScraper/TestFiles/"
+	TEST_WEB_URL = "https://www.dealerrater.com/dealer/McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
 
 	# make sure that the review parser still works
 	def test_get_review
@@ -21,7 +22,17 @@ class TestScraper < Test::Unit::TestCase
 			},
 			"Yes"
 		)
-		assert(review.equalsReview(review2), "Review parser isn't working")
+		assert(review.equals_review(review2), "Review parser isn't working")
+
+	end
+
+	# make sure that the DOM of dealerrater is still in the same format
+	def test_site_dom
+		webReview = Scraper.new("").get_review(Mechanize.new.get(TEST_WEB_URL).css('.review-entry').first)
+		assert_not_nil(webReview.reviewContent)
+		assert_not_nil(Fixnum)
+		assert_equal(5, webReview.individualRatings.keys.length)
+		assert_instance_of(String, webReview.wouldRecommend)
 	end
 
 	# make sure that get_reviews is pulling 10 review from the test site

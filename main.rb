@@ -9,7 +9,7 @@ scraper = Scraper.new("McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-rev
 
 reviews = scraper.parse(1, 5)
 
-reviews = reviews.select { |review| review.wouldRecommend == WOULD_RECOMMEND and review.emotion == REVIEW_EMOTION and review.sumIndScore == SUM_IND_SCORE }
+reviews = reviews.select { |review| review.wouldRecommend == WOULD_RECOMMEND and review.emotion == REVIEW_EMOTION and review.sum_ind_score == SUM_IND_SCORE }
 
 reviews = reviews.sort{ |a, b|  a.polarity <=> b.polarity }
 

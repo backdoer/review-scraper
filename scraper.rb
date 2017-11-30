@@ -18,7 +18,7 @@ class Scraper
 	def get_review(review)
 
 		reviewObject = Review.new(
-			review.css('.review-content').first.content.strip,
+			review.css('.review-content').first&.content.strip,
 			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first),
 			create_rating_dict(review.css('.review-ratings-all .tr')),
 			review.css('.review-ratings-all .tr').last.css('div').last.content.strip

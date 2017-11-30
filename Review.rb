@@ -6,7 +6,6 @@ class Review
 
 	@@analyzer = Sentimental.new
 	@@analyzer.load_defaults
-	@@analyzer.threshold = 2
 
 	def initialize(reviewContent, overallRating, individualRatings, wouldRecommend)
 		@reviewContent = reviewContent
@@ -29,12 +28,12 @@ class Review
 		return @@analyzer.sentiment(@reviewContent)
 	end
 
-	def sumIndScore
+	def sum_ind_score
 		return @individualRatings.values.inject(:+)
 	end
 
 	# equality comparison for testing
-	def equalsReview(oR)
+	def equals_review(oR)
 		oR.reviewContent == @reviewContent and oR.overallRating == @overallRating and oR.individualRatings == @individualRatings and oR.wouldRecommend == @wouldRecommend
 	end
 
