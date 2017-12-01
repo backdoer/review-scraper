@@ -9,13 +9,20 @@ class Scraper
 	# constants
 	BASE_URL = 'https://www.dealerrater.com/dealer/'
 	RATING_KW = "rating"
+	CLASS_KW = "class"
 	DEFAULT_DEALER = "McKaig-Chevrolet-Buick-A-Dealer-For-The-People-dealer-reviews-23685"
 
 	# error messages used in validation
 	IS_NUMERIC_ERROR = "The starting and ending pages must be numbers"
 	PAGES_ORDER_ERROR = "The starting page must be less than the ending page"
 	PAGES_GRTH_0_ERROR = "The starting and ending pages must be greather than 0"
-	
+
+	# DOM constants and locations
+	REVIEW_CONTENT = ".review-content"
+	DEALERSHIP_RATING = ".dealership-rating .hidden-xs.rating-static"
+	RATINGS_ALL = ".review-ratings-all .tr"
+	REVIEW_WRAPPER = ".review-wrapper div"
+	REVIEW_ENTRY = ".review-entry"
 
 	# constructor
 	def initialize(dealerId = DEFAULT_DEALER)
@@ -66,12 +73,12 @@ class Scraper
 	def get_review(review)
 
 		reviewObject = Review.new(
-			review.css('.review-content').first&.content.strip.gsub(/\r\n/,""),   			  # content
-			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first), # rating 
-			create_rating_dict(review.css('.review-ratings-all .tr')[0...-1]),				  # individual ratings
-			review.css('.review-ratings-all .tr').last.css('div').last.content.strip,	      # would recommend
-			review.css('.review-wrapper div h3').first.content.tr("\"", "").strip,			  # headline
-			review.css('.review-wrapper div span').first.content.tr("-", "").strip            # username
+			review.css(REVIEW_CONTENT).first&.content.strip.gsub(/\r\n/,""),   			          # content
+			get_ranking_val(review.css(DEALERSHIP_RATING).first), # rating 
+			create_rating_dict(review.css(RATINGS_ALL)[0...-1]),				                  # individual ratings
+			review.css(RATINGS_ALL).last.css("div").last.content.strip,	                          # would recommend
+			review.css("#{REVIEW_WRAPPER} h3").first.content.tr("\"", "").strip,			  # headline
+			review.css("#{REVIEW_WRAPPER} span").first.content.tr("-", "").strip              # username
 		)
 
 		return reviewObject
@@ -82,7 +89,7 @@ class Scraper
 	def get_reviews(doc)
 
 		reviews = []
-		doc.css('.review-entry').each do |review|
+		doc.css(REVIEW_ENTRY).each do |review|
 			reviews.push(get_review(review))
 		end
 
@@ -92,8 +99,8 @@ class Scraper
 	# take a string of class values and find the one matching the pattern rating-\d\d
 	# return the value of the digits if one is found
 	def get_ranking_val(review)
-		if review.key?('class')
-			return review['class'][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
+		if review.key?(CLASS_KW )
+			return review[CLASS_KW][/#{RATING_KW}\-\d\d/]&.split("#{RATING_KW}-").last&.to_i
 		end
 
 		return nil
