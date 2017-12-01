@@ -46,6 +46,7 @@ reviews = reviews.select { |review|
 # order the reviews by the highest average sentiment score
 reviews = reviews.sort{ |a, b|  a.averageScore <=> b.averageScore }.reverse
 
+# line to be printed to the screen
 line = Array.new(80){"_"}.join("")
 
 # output the top specified number of most 'overly positive' reviews

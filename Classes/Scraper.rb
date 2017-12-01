@@ -66,9 +66,9 @@ class Scraper
 	def get_review(review)
 
 		reviewObject = Review.new(
-			review.css('.review-content').first&.content.strip.gsub(/\r\n/,""),   # content
+			review.css('.review-content').first&.content.strip.gsub(/\r\n/,""),   			  # content
 			get_ranking_val(review.css('.dealership-rating .hidden-xs.rating-static').first), # rating 
-			create_rating_dict(review.css('.review-ratings-all .tr')),						  # individual ratings
+			create_rating_dict(review.css('.review-ratings-all .tr')[0...-1]),				  # individual ratings
 			review.css('.review-ratings-all .tr').last.css('div').last.content.strip,	      # would recommend
 			review.css('.review-wrapper div h3').first.content.tr("\"", "").strip,			  # headline
 			review.css('.review-wrapper div span').first.content.tr("-", "").strip            # username
@@ -104,7 +104,7 @@ class Scraper
 	def create_rating_dict (reviews)
 		reviewDict = Hash.new
 
-		for i in 0..reviews.length - 2
+		for i in 0..reviews.length - 1
 			details = reviews[i].css('div')
 			reviewDict[details.first.content] = get_ranking_val(details.last)
 		end
