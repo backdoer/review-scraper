@@ -33,9 +33,7 @@ class Scraper
 	# return array of all review objects across specified pages
 	def parse(startingPage, endingPage = nil)
 		# handle missing endingPage
-		if !endingPage
-			endingPage = startingPage
-		end
+		endingPage = endingPage.nil? ? startingPage : endingPage
 
 		validate_pages(startingPage, endingPage)
 
@@ -45,10 +43,12 @@ class Scraper
 		# get the html
 		doc = agent.get("#{@url}#{startingPage}")
 
+		# array of reviews to be held across all pages
 		reviews = []
 
 		anotherPage = true
 
+		# Go through each page and add review objects to the reviews array
 		while anotherPage
 
 			reviews += get_reviews(doc)
