@@ -27,7 +27,8 @@ class TestScraper < Test::Unit::TestCase
 			"Jrainer1010",
 
 		)
-		assert(review.equals_review(review2), "Review parser isn't working")
+		assert(review.equals_review(review2), 
+			"Review parser isn't working")
 
 	end
 
@@ -37,32 +38,41 @@ class TestScraper < Test::Unit::TestCase
 		      Mechanize.new.get("#{Scraper::BASE_URL}#{Scraper::DEFAULT_DEALER}")\
 		      .css('.review-entry').first
 
-		assert_not_nil(webReview.reviewContent)
-		assert_not_nil(Fixnum)
-		assert_equal(5, webReview.individualRatings.keys.length)
-		assert_instance_of(String, webReview.wouldRecommend)
+		assert_not_nil(webReview.reviewContent, 
+			"Review Content isn't being pulled correctly from DealerRater")
+		assert_not_nil(Fixnum, 
+			"Rating value isn't being pulled corretly from DealerRater")
+		assert_equal(5, webReview.individualRatings.keys.length, 
+			"The 5 individual ratings aren't being pulled correctly from DealerRater")
+		assert_instance_of(String, webReview.wouldRecommend, 
+			"The 'Recommend Dealer' value isn't being pulled correctly from DealerRater")
 	end
 
 	# make sure that get_reviews is pulling 10 review from the test site
 	def test_get_reviews
 		reviews = Scraper.new().send :get_reviews, Mechanize.new.get("#{TEST_FILE_DIR}TestSite.html")
-		assert_equal(10, reviews.count)
+		assert_equal(10, reviews.count,
+			"The get_reviews method isn't pulling in the expected amount of reviews")
 	end
 
 	def test_parse
 
 		# make sure page validation works
 		exception = assert_raise(ArgumentError) {Scraper.new().parse("a")}
-		assert_equal(Scraper::IS_NUMERIC_ERROR, exception.message)
+		assert_equal(Scraper::IS_NUMERIC_ERROR, exception.message,
+			"Error wasn't caught of pages not being numeric")
 
 		exception = assert_raise(ArgumentError) {Scraper.new().parse(1, 0)}
-		assert_equal(Scraper::PAGES_ORDER_ERROR, exception.message)
+		assert_equal(Scraper::PAGES_ORDER_ERROR, exception.message, 
+			"Error wasn't caught of pages being in wrong order")
 
 		exception = assert_raise(ArgumentError) {Scraper.new().parse(-3, -1)}
-		assert_equal(Scraper::PAGES_GRTH_0_ERROR, exception.message)
+		assert_equal(Scraper::PAGES_GRTH_0_ERROR, exception.message,
+			"Error wasn't caught of pages not being greater than 0")
 
 		# make sure navigation across multiple pages works
-		assert_equal(20, Scraper.new().parse(1, 2).count)
+		assert_equal(20, Scraper.new().parse(1, 2).count, 
+			"Unexpected number of reviews returned while navigating DealerRater pages.")
 	end
 
 end
