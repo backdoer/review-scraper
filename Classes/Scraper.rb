@@ -16,6 +16,7 @@ class Scraper
 	IS_NUMERIC_ERROR = "The starting and ending pages must be numbers"
 	PAGES_ORDER_ERROR = "The starting page must be less than the ending page"
 	PAGES_GRTH_0_ERROR = "The starting and ending pages must be greather than 0"
+	NOT_FOUND_ERROR = "could not be found. Are you sure you specified a valid Dealer Id?"
 
 	# DOM constants and locations
 	REVIEW_CONTENT = ".review-content"
@@ -26,7 +27,7 @@ class Scraper
 
 	# constructor
 	def initialize(dealerId = DEFAULT_DEALER)
-		@url = "#{BASE_URL}/#{dealerId}/page"
+		@url = "#{BASE_URL}#{dealerId}/page"
 	end
 
 	# parse method to go through pages and grab reviews
@@ -37,11 +38,9 @@ class Scraper
 
 		validate_pages(startingPage, endingPage)
 
-		# Create a mechanize agent to scrape the web pages
-		agent = Mechanize.new
-
 		# get the html
-		doc = agent.get("#{@url}#{startingPage}")
+		#doc = agent.get("#{@url}#{startingPage}")
+		doc = get_page("#{@url}#{startingPage}")
 
 		# array of reviews to be held across all pages
 		reviews = []
@@ -55,7 +54,7 @@ class Scraper
 
 			if startingPage < endingPage
 				startingPage += 1
-				doc = agent.get("#{@url}#{startingPage}")
+				doc = get_page("#{@url}#{startingPage}")
 			else
 				anotherPage = false
 			end
@@ -67,6 +66,29 @@ class Scraper
 
 	# private helper functions
 	private 
+
+	# get a page 
+	def get_page(url)
+		begin
+		  if not defined? agent
+		  	agent = Mechanize.new
+		  end
+
+		  return agent.get(url)
+
+		rescue Mechanize::ResponseCodeError => e
+
+		  # if page couldn't be found, throw an error
+		  if e.response_code == "404"
+		  	raise ArgumentError.new(
+		  		"#{@url} #{NOT_FOUND_ERROR}"
+		  		)
+		  else
+		  	throw
+		  end 
+
+		end
+	end
 
 	# create a review object out of an html element
 	# return review object
