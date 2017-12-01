@@ -104,8 +104,8 @@ class Scraper
 	def create_rating_dict (reviews)
 		reviewDict = Hash.new
 
-		for i in 0..reviews.length - 1
-			details = reviews[i].css('div')
+		reviews.each do |review|
+			details = review.css('div')
 			reviewDict[details.first.content] = get_ranking_val(details.last)
 		end
 
