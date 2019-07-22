@@ -67,7 +67,7 @@ class Scraper
 	# private helper functions
 	private 
 
-	# get a page 
+	# get a page given a url
 	def get_page(url)
 		begin
 		  if not defined? agent
@@ -95,10 +95,10 @@ class Scraper
 	def get_review(review)
 
 		reviewObject = Review.new(
-			review.css(REVIEW_CONTENT).first&.content.strip.gsub(/\r\n/,""),   			          # content
-			get_ranking_val(review.css(DEALERSHIP_RATING).first), # rating 
-			create_rating_dict(review.css(RATINGS_ALL)[0...-1]),				                  # individual ratings
-			review.css(RATINGS_ALL).last.css("div").last.content.strip,	                          # would recommend
+			review.css(REVIEW_CONTENT).first&.content.strip.gsub(/\r\n/,""),   			      # content
+			get_ranking_val(review.css(DEALERSHIP_RATING).first), 							  # rating 
+			create_rating_dict(review.css(RATINGS_ALL)[0...-1]),				              # individual ratings
+			review.css(RATINGS_ALL).last.css("div").last.content.strip,	                      # would recommend
 			review.css("#{REVIEW_WRAPPER} h3").first.content.tr("\"", "").strip,			  # headline
 			review.css("#{REVIEW_WRAPPER} span").first.content.tr("-", "").strip              # username
 		)
